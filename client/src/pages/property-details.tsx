@@ -3,6 +3,7 @@ import { Typography, Box, Stack } from '@pankod/refine-mui';
 import { useDelete, useGetIdentity, useShow } from '@pankod/refine-core';
 import { useParams, useNavigate } from '@pankod/refine-react-router-v6';
 import { ChatBubble, Delete, Edit, Phone, Place, Star } from '@mui/icons-material';
+import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 
 import { CustomButton } from 'components';
 
@@ -47,6 +48,18 @@ const PropertyDetails = () => {
     }
   };
 
+  const location = propertyDetails.location; // assuming this is the location you want to show on the map
+
+  const mapContainerStyle = {
+    width: '100%',
+    height: '300px'
+  };
+
+  const center = {
+    lat: parseFloat(location.latitude), // assuming location.latitude is the latitude of the location
+    lng: parseFloat(location.longitude) // assuming location.longitude is the longitude of the location
+  };
+
   return (
     <Box
       borderRadius="15px"
@@ -87,8 +100,7 @@ const PropertyDetails = () => {
               <Box>
                 <Typography fontSize={16} fontWeight={600} mt="10px" color="#11142D">Price</Typography>
                 <Stack direction="row" alignItems="flex-end" gap={1}>
-                  <Typography fontSize={25} fontWeight={700} color="#475BE8">${propertyDetails.price}</Typography>
-                  <Typography fontSize={14} color="#808191" mb={0.5}>for one day</Typography>
+                  <Typography fontSize={25} fontWeight={700} color="#475BE8">Tk {propertyDetails.price}</Typography>
                 </Stack>
               </Box>
             </Stack>
@@ -161,18 +173,27 @@ const PropertyDetails = () => {
             </Stack>
           </Stack>
 
-          <Stack>
-            <img
-              src="https://serpmedia.org/scigen/images/googlemaps-nyc-standard.png?crc=3787557525"
-              width="100%"
-              height={306}
-              style={{ borderRadius: 10, objectFit: 'cover' }}
-            />
-          </Stack>
+          <LoadScript googleMapsApiKey="AIzaSyApdnBLqJeVW4c5t1Z32v8BzVBVWyJnY1g">
+            <GoogleMap
+              mapContainerStyle={mapContainerStyle}
+              center={center}
+              zoom={10}
+            >
+              <Marker position={center} />
+            </GoogleMap>
+          </LoadScript>
 
           <Box>
             <CustomButton
-              title="Book Now"
+              title="Rented"
+              backgroundColor="#475BE8"
+              color="#FCFCFC"
+              fullWidth
+            />
+          </Box>
+          <Box>
+            <CustomButton
+              title="Sold"
               backgroundColor="#475BE8"
               color="#FCFCFC"
               fullWidth

@@ -1,4 +1,4 @@
-import { Add } from '@mui/icons-material';
+import { Add, CenterFocusStrong } from '@mui/icons-material';
 import { useTable } from '@pankod/refine-core';
 import { Box, Stack, Typography, TextField, Select, MenuItem } from '@pankod/refine-mui';
 import { useNavigate } from '@pankod/refine-react-router-v6';
@@ -122,7 +122,7 @@ const AllProperties = () => {
       </Box>
 
       {allProperties.length > 0  && (
-        <Box display="flex" gap={2} mt={3} flexWrap="wrap">
+        <Box display="flex" gap={2} mt={5} flexWrap="wrap" alignItems={'center'} justifyContent={'center'} >
           <CustomButton 
             title="Previous"
             handleClick={() => setCurrent((prev) => prev - 1)}

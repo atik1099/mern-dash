@@ -30,6 +30,29 @@ const createUser = async (req, res) => {
   }
 };
 
+const updateUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { name, description, image, phoneNumber, location } = req.body;
+
+    const userToUpdate = await User.findByIdAndUpdate({ _id: id }, {
+      $set: {
+        name,
+        description,
+        image: image ? await cloudinary.uploader.upload(image).url : undefined,
+        phoneNumber,
+        location,
+      },
+    });
+
+    if (!userToUpdate) throw new Error('User not found');
+
+    res.status(200).json({ message: 'User updated successfully' });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 const getUserInfoByID = async (req, res) => {
   try {
     const { id } = req.params;
@@ -50,4 +73,5 @@ export {
   getAllUsers,
   createUser,
   getUserInfoByID,
+  updateUser
 }

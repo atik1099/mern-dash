@@ -11,8 +11,13 @@ import {
 } from "@pankod/refine-mui";
 import {
   AccountCircleOutlined,
+  BedroomParentOutlined,
   ChatBubbleOutline,
+  MinorCrash,
+  NoCrashOutlined,
+  PaymentOutlined,
   PeopleAltOutlined,
+  SellOutlined,
   StarOutlineRounded,
   VillaOutlined,
 } from '@mui/icons-material'
@@ -139,20 +144,21 @@ function App() {
               icon: <VillaOutlined />,
             },
             {
+              name: "Sell",
+              list: Home,
+              icon: <SellOutlined />,
+            },
+            {
+              name: "rent",
+              list: Home,
+              // icon: <NoCrashOutlined/>,
+              icon: <PaymentOutlined/>,
+            },
+            {
               name: "agents",
               list: Agents,
               show: AgentProfile,
               icon: <PeopleAltOutlined />,
-            },
-            {
-              name: "reviews",
-              list: Home,
-              icon: <StarOutlineRounded />,
-            },
-            {
-              name: "messages",
-              list: Home,
-              icon: <ChatBubbleOutline />,
             },
             {
               name: "my-profile",

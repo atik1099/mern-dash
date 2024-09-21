@@ -7,6 +7,7 @@ const Agents = () => {
   const { data, isLoading, isError } = useList({ resource: 'users'});
 
   const allAgents  = data?.data ?? [];
+  const agentCount = allAgents.length
 
   if(isLoading) return <div>loading...</div>
   if(isError) return <div>error...</div>
@@ -14,6 +15,7 @@ const Agents = () => {
   return (
     <Box>
       <Typography fontSize={25} fontWeight={700} color="#11142d">Agents List</Typography>
+      <Typography>{`Agent Count: ${agentCount}`}</Typography>
 
       <Box
         mt="20px"

@@ -2,6 +2,8 @@ import { useList } from '@pankod/refine-core';
 import { Typography, Box, Stack } from '@pankod/refine-mui';
 
 import { PieChart, PropertyReferrals, TotalRevenue, PropertyCard } from 'components';
+// import {agentCount} from './agent';
+
 
 const Home = () => {
   const { data, isLoading, isError } = useList({
@@ -15,8 +17,14 @@ const Home = () => {
 
   const latestProperties = data?.data ?? [];
 
-  if(isLoading) return <Typography>Loading...</Typography>
-  if(isError) return <Typography>Something went wrong!</Typography>
+  const allPropertiesCount = latestProperties.length;
+
+  const propertiesForSell = latestProperties.filter((property) => property.type === 'forSell').length;
+  const propertiesForRent = latestProperties.filter((property) => property.type === 'forRent').length;
+
+
+  if (isLoading) return <Typography>Loading...</Typography>
+  if (isError) return <Typography>Something went wrong!</Typography>
 
   return (
     <Box>
@@ -24,29 +32,31 @@ const Home = () => {
         Dashboard
       </Typography>
 
+      
       <Box mt="20px" display="flex" flexWrap="wrap" gap={4}>
-        <PieChart 
-          title="Properties for Sale"
-          value={684}
-          series={[75, 25]}
+        <PieChart
+          title="Total Enlisted Properties"
+          value={allPropertiesCount}
+          series={[allPropertiesCount, latestProperties.length - allPropertiesCount]}
           colors={['#275be8', '#c4e8ef']}
         />
-        <PieChart 
+        <PieChart
+          title="Properties for Sell"
+          value={propertiesForSell}
+          series={[propertiesForSell, propertiesForRent]}
+          colors={['#275be8', '#c4e8ef']}
+        />
+        <PieChart
           title="Properties for Rent"
-          value={550}
-          series={[60, 40]}
+          value={propertiesForRent}
+          series={[propertiesForRent, propertiesForSell]}
           colors={['#275be8', '#c4e8ef']}
         />
-        <PieChart 
-          title="Total customers"
-          value={5684}
-          series={[75, 25]}
-          colors={['#275be8', '#c4e8ef']}
-        />
-        <PieChart 
-          title="Properties for Cities"
-          value={555}
-          series={[75, 25]}
+        <PieChart
+          title="Total Agents"
+          value={4}
+          // this needs to be dynamic
+          series={[3, 1]} // replace with dynamic values
           colors={['#275be8', '#c4e8ef']}
         />
       </Box>
@@ -68,9 +78,9 @@ const Home = () => {
       >
         <Typography fontSize="18px" fontWeight={600} color="#11142d">Latest Properties</Typography>
 
-        <Box mt={2.5} sx={{ display: 'flex', flexWrap: 'wrap', gap: 4}}>
+        <Box mt={2.5} sx={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
           {latestProperties.map((property) => (
-            <PropertyCard 
+            <PropertyCard
               key={property._id}
               id={property._id}
               title={property.title}
