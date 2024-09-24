@@ -11,14 +11,9 @@ import {
 } from "@pankod/refine-mui";
 import {
   AccountCircleOutlined,
-  BedroomParentOutlined,
-  ChatBubbleOutline,
-  MinorCrash,
-  NoCrashOutlined,
   PaymentOutlined,
   PeopleAltOutlined,
   SellOutlined,
-  StarOutlineRounded,
   VillaOutlined,
 } from '@mui/icons-material'
 
@@ -41,6 +36,8 @@ import {
   AgentProfile,
   EditProperty,
 } from "pages";
+import soldProperties from "pages/sold-properties";
+import rentedProperties from "pages/rented-properties";
 
 const axiosInstance = axios.create();
 axiosInstance.interceptors.request.use((request: AxiosRequestConfig) => {
@@ -145,13 +142,12 @@ function App() {
             },
             {
               name: "Sell",
-              list: Home,
+              list: soldProperties,
               icon: <SellOutlined />,
             },
             {
               name: "rent",
-              list: Home,
-              // icon: <NoCrashOutlined/>,
+              list: rentedProperties,
               icon: <PaymentOutlined/>,
             },
             {

@@ -24,7 +24,8 @@ export interface PropertyProps {
     location: string,
     price: string,
     photo: string,
-    creator: string
+    creator: string,
+    sold: boolean
 }
 
 export interface FormProps {

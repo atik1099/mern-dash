@@ -15,6 +15,7 @@ function checkImage(url: any) {
 
 const PropertyDetails = () => {
   const navigate = useNavigate();
+  const propertyId = 'some-property-id';
   const { data: user } = useGetIdentity();
   const { queryResult } = useShow();
   const { mutate } = useDelete();
@@ -59,6 +60,19 @@ const PropertyDetails = () => {
     lat: parseFloat(location.latitude), // assuming location.latitude is the latitude of the location
     lng: parseFloat(location.longitude) // assuming location.longitude is the longitude of the location
   };
+
+  // const handleSold = () => {
+  //   // Mark the property as sold (e.g., update the property's status in your database)
+  //   // ...
+  //   navigate('/sold', { state: { propertyId: propertyDetails._id } });
+  // };
+
+  const handleSoldButtonClick = () => {
+    navigate('/sold-properties', {
+      state: { propertyId }, // Pass the propertyId correctly
+    });
+  };
+
 
   return (
     <Box
@@ -193,6 +207,8 @@ const PropertyDetails = () => {
           </Box>
           <Box>
             <CustomButton
+            handleClick={handleSoldButtonClick}
+            // handleClick={handleSold}
               title="Sold"
               backgroundColor="#475BE8"
               color="#FCFCFC"
