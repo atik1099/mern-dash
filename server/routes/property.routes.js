@@ -1,7 +1,7 @@
 import express from 'express';
 
 import {
-  createProperty, deleteProperty, getAllProperties, getPropertyDetail, getSoldProperties, updateProperty
+  createProperty, deleteProperty, getAllProperties, getAllSoldProperties, getPropertyDetail, updateProperty
 } from '../controllers/property.controller.js'
 
 const router = express.Router();
@@ -11,6 +11,6 @@ router.route('/:id').get(getPropertyDetail);
 router.route('/').post(createProperty);
 router.route('/:id').patch(updateProperty);
 router.route('/:id').delete(deleteProperty);
-router.route('/sold').get(getSoldProperties);
+router.route('/sold').get(getAllSoldProperties);
 
 export default router;
