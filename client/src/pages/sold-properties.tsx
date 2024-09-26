@@ -1,21 +1,14 @@
-import { Add, CenterFocusStrong } from '@mui/icons-material';
+import { Add } from '@mui/icons-material';
 import { useTable } from '@pankod/refine-core';
 import { Box, Stack, Typography, TextField, Select, MenuItem } from '@pankod/refine-mui';
 import { useNavigate } from '@pankod/refine-react-router-v6';
 import { useMemo } from 'react';
 import { PropertyCard, CustomButton } from 'components';
 
-interface Property {
-  _id: string;
-  title: string;
-  location: string;
-  price: number;
-  photo: string;
-  // Add other properties as needed
-}
 
 const SoldProperties = () => {
   const navigate = useNavigate();
+
 
   const {
     tableQueryResult: { data, isLoading, isError },
@@ -47,6 +40,7 @@ const SoldProperties = () => {
 
   if (isLoading) return <Typography>Loading...</Typography>;
   if (isError) return <Typography>Error...</Typography>;
+
 
   return (
     <Box>

@@ -1,6 +1,6 @@
 /* eslint-disable no-restricted-globals */
-import { Typography, Box, Stack } from '@pankod/refine-mui';
-import { useDelete, useGetIdentity, useShow } from '@pankod/refine-core';
+import { Typography, Box, Stack, Button } from '@pankod/refine-mui';
+import { ILogData, IResourceComponentsProps, useDelete, useGetIdentity, useShow } from '@pankod/refine-core';
 import { useParams, useNavigate } from '@pankod/refine-react-router-v6';
 import { ChatBubble, Delete, Edit, Phone, Place, Star } from '@mui/icons-material';
 import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
@@ -13,9 +13,17 @@ function checkImage(url: any) {
   return img.width !== 0 && img.height !== 0;
 }
 
-const PropertyDetails = () => {
+interface Property {
+  id: number;
+  name: string;
+  // Add other properties as needed
+}
+interface PropertyDetailsProps extends IResourceComponentsProps<any, any, ILogData> {
+  // Remove the property prop from the interface
+}
+
+const PropertyDetails = ({ ...props }: PropertyDetailsProps) => {
   const navigate = useNavigate();
-  const propertyId = 'some-property-id';
   const { data: user } = useGetIdentity();
   const { queryResult } = useShow();
   const { mutate } = useDelete();
@@ -32,6 +40,8 @@ const PropertyDetails = () => {
   if (isError) {
     return <div>Something went wrong!</div>;
   }
+
+
 
   const isCurrentUser = user.email === propertyDetails.creator.email;
 
@@ -60,19 +70,6 @@ const PropertyDetails = () => {
     lat: parseFloat(location.latitude), // assuming location.latitude is the latitude of the location
     lng: parseFloat(location.longitude) // assuming location.longitude is the longitude of the location
   };
-
-  // const handleSold = () => {
-  //   // Mark the property as sold (e.g., update the property's status in your database)
-  //   // ...
-  //   navigate('/sold', { state: { propertyId: propertyDetails._id } });
-  // };
-
-  const handleSoldButtonClick = () => {
-    navigate('/sold-properties', {
-      state: { propertyId }, // Pass the propertyId correctly
-    });
-  };
-
 
   return (
     <Box
@@ -206,13 +203,26 @@ const PropertyDetails = () => {
             />
           </Box>
           <Box>
-            <CustomButton
-            handleClick={handleSoldButtonClick}
-            // handleClick={handleSold}
+          <CustomButton
               title="Sold"
               backgroundColor="#475BE8"
               color="#FCFCFC"
               fullWidth
+              handleClick={() => {
+                const propertyId = id;
+                fetch('/api/properties/${id}', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ propertyId }),
+                })
+                .then((response) => response.json())
+                .then((data) => {
+                  console.log('Property marked as sold:', data);
+                })
+                .catch((error) => {
+                  console.error('Error marking property as sold:', error);
+                });
+              }}
             />
           </Box>
         </Box>
